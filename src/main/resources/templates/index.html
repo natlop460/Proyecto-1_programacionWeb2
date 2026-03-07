@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema Gestor de citas médicas - Login</title>
+
+    <style>
+
+        body{
+            font-family: Arial, sans-serif;
+            background:#f4f6f8;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+        }
+
+        .container{
+            background:white;
+            padding:30px;
+            border-radius:10px;
+            width:350px;
+            box-shadow:0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        h2{
+            text-align:center;
+            margin-bottom:20px;
+        }
+
+        input, select{
+            width:100%;
+            padding:10px;
+            margin-top:8px;
+            margin-bottom:15px;
+            border:1px solid #ccc;
+            border-radius:5px;
+        }
+
+        button{
+            width:100%;
+            padding:10px;
+            background:#4CAF50;
+            color:white;
+            border:none;
+            border-radius:5px;
+            cursor:pointer;
+        }
+
+        button:hover{
+            background:#45a049;
+        }
+
+        .switch{
+            text-align:center;
+            margin-top:15px;
+            cursor:pointer;
+            color:#007bff;
+        }
+
+        .form{
+            display:none;
+        }
+
+        .active{
+            display:block;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<div class="container">
+
+    <!-- LOGIN -->
+    <div id="loginForm" class="form active">
+
+        <h2>Iniciar Sesión</h2>
+
+        <form action="/dashboard" method="post">
+
+            <label>Email</label>
+            <input type="email" name="email" required>
+
+            <label>Contraseña</label>
+            <input type="password" name="password" required>
+
+            <button type="submit">Entrar</button>
+
+        </form>
+
+        <div class="switch" onclick="mostrarRegistro()">
+            ¿No tienes cuenta? Registrarse
+        </div>
+
+    </div>
+
+
+    <!-- REGISTRO -->
+    <div id="registroForm" class="form">
+
+        <h2>Crear Cuenta</h2>
+
+        <form action="/register" method="post">
+
+            <label>Nombre</label>
+            <input type="text" name="nombre" required>
+
+            <label>Email</label>
+            <input type="email" name="email" required>
+
+            <label>Contraseña</label>
+            <input type="password" name="password" required>
+
+            <label>Rol</label>
+            <select name="rol" required>
+                <option value="">Seleccione un rol</option>
+                <option value="USER">Usuario</option>
+                <option value="ADMIN">Administrador</option>
+            </select>
+
+            <button type="submit">Registrarse</button>
+
+        </form>
+
+        <div class="switch" onclick="mostrarLogin()">
+            ¿Ya tienes cuenta? Iniciar sesión
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+    function mostrarRegistro(){
+        document.getElementById("loginForm").classList.remove("active");
+        document.getElementById("registroForm").classList.add("active");
+    }
+
+    function mostrarLogin(){
+        document.getElementById("registroForm").classList.remove("active");
+        document.getElementById("loginForm").classList.add("active");
+    }
+
+</script>
+
+</body>
+</html>
