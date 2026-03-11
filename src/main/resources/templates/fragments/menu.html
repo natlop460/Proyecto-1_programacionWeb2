@@ -1,0 +1,24 @@
+<nav th:fragment="menu" class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" th:href="@{/dashboard}">
+      Sistema de citas clínicas
+    </a>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link active" th:href="@{/dashboard}">
+            Dashboard
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/citas}">
+            Citas
+          </a>
+        </li>
+      </ul>
+      <a class="nav-link" th:href="@{/}">
+        Salir
+      </a>
+    </div>
+  </div>
+</nav>

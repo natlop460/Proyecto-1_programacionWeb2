@@ -3,183 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <title>Dashboard</title>
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
 </head>
-
 <body>
-
-<!-- NAVBAR -->
-
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-
-        <a class="navbar-brand" href="#">Sistema de citas clínicas</a>
-
-        <div class="collapse navbar-collapse">
-
-            <ul class="navbar-nav me-auto">
-
-                <li class="nav-item">
-                    <a class="nav-link active" th:href="@{/dashboard}">Dashboard</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/citas}">Citas</a>
-                </li>
-
-            </ul>
-
-            <a class="nav-link" th:href="@{/logout}">Salir</a>
-
-        </div>
-    </div>
-</nav>
-
-
-<div class="container mt-4">
-
-    <!-- TITLE -->
-
-    <h2>Dashboard</h2>
-    <p class="text-muted">
-        Bienvenido! Maneje sus citas aquí.
-    </p>
-
-
-    <!-- CARDS -->
-
-    <div class="row mt-4">
-
-        <!-- Create Appointment -->
-
-        <div class="col-md-4">
-            <div class="card shadow-sm p-3">
-
-                <h5>Crear cita</h5>
-
-                <p class="text-muted">
-                    Agende una nueva cita con su doctor
-                </p>
-
-                <a th:href="@{/citas/crear}" class="btn btn-primary">
-                    Crear
-                </a>
-
+    <!-- NAVBAR -->
+    <div th:replace="fragments/menu :: menu"></div>
+    <!-- PAGE -->
+    <div class="container mt-4">
+        <!-- TITLE -->
+        <h2>Dashboard</h2>
+        <p class="text-muted">
+            Bienvenido! Maneje sus citas aquí.
+        </p>
+        <!-- CARDS -->
+        <div class="row mt-4">
+            <!-- Create Appointment -->
+            <div class="col-md-4">
+                <div class="card shadow-sm p-3">
+                    <h5>Crear cita</h5>
+                    <p class="text-muted">
+                        Agende una nueva cita con su doctor
+                    </p>
+                    <a th:href="@{/citas/crear}" class="btn btn-primary">
+                        Crear
+                    </a>
+                </div>
+            </div>
+            <!-- My Appointments -->
+            <div class="col-md-4">
+                <div class="card shadow-sm p-3">
+                    <h5>Mis citas</h5>
+                    <p class="text-muted">
+                        Ver y manejar sus citas agendadas
+                    </p>
+                    <a th:href="@{/citas}" class="btn btn-primary">
+                        Ver
+                    </a>
+                </div>
+            </div>
+            <!-- View Agenda -->
+            <div class="col-md-4">
+                <div class="card shadow-sm p-3">
+                    <h5>Ver Agenda</h5>
+                    <p class="text-muted">
+                        Ver tu agenda completa de citas.
+                    </p>
+                    <a th:href="@{/citas}" class="btn btn-primary">
+                        Abrir
+                    </a>
+                </div>
             </div>
         </div>
-
-
-        <!-- My Appointments -->
-
-        <div class="col-md-4">
-            <div class="card shadow-sm p-3">
-
-                <h5>Mis citas</h5>
-
-                <p class="text-muted">
-                    Ver y manejar sus citas agendadas
-                </p>
-
-                <a th:href="@{/citas}" class="btn btn-primary">
-                    Ver
-                </a>
-
+        <!-- UPCOMING APPOINTMENTS -->
+        <div class="card mt-5">
+            <div class="card-header bg-primary text-white">
+                Próximas citas
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>fecha</th>
+                        <th>Hora</th>
+                        <th>Doctor</th>
+                        <th>Razón</th>
+                        <th>Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="cita : ${citas}">
+                        <td th:text="${cita.fecha}"></td>
+                        <td th:text="${cita.hora}"></td>
+                        <td th:text="${cita.doctor}"></td>
+                        <td th:text="${cita.motivo}"></td>
+                        <td><span class="badge bg-success" th:text="${cita.estado}"></span></td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-
-
-        <!-- View Agenda -->
-
-        <div class="col-md-4">
-            <div class="card shadow-sm p-3">
-
-                <h5>Ver Agenda</h5>
-
-                <p class="text-muted">
-                    ver tu agenda cxompleta de citas.
-                </p>
-
-                <a th:href="@{/citas}" class="btn btn-primary">
-                    Abrir
-                </a>
-
-            </div>
-        </div>
-
     </div>
-
-
-    <!-- UPCOMING APPOINTMENTS -->
-
-    <div class="card mt-5">
-
-        <div class="card-header bg-primary text-white">
-            Próximas citas
-        </div>
-
-        <div class="card-body">
-
-            <table class="table">
-
-                <thead>
-                <tr>
-                    <th>fecha</th>
-                    <th>Hora</th>
-                    <th>Doctor</th>
-                    <th>Razón</th>
-                    <th>Status</th>
-                </tr>
-                </thead>
-
-                <tbody>
-
-                <tr>
-                    <td>2026-03-10</td>
-                    <td>09:00 AM</td>
-                    <td>Dr. Smith</td>
-                    <td>Annual Checkup</td>
-                    <td>
-                        <span class="badge bg-success">
-                            Confirmed
-                        </span>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>2026-03-12</td>
-                    <td>02:30 PM</td>
-                    <td>Dr. Johnson</td>
-                    <td>Follow-up</td>
-                    <td>
-                        <span class="badge bg-success">
-                            Confirmed
-                        </span>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>2026-03-15</td>
-                    <td>11:00 AM</td>
-                    <td>Dr. Williams</td>
-                    <td>Consultation</td>
-                    <td>
-                        <span class="badge bg-success">
-                            Confirmed
-                        </span>
-                    </td>
-                </tr>
-
-                </tbody>
-
-            </table>
-
-        </div>
-
-    </div>
-
-</div>
-
 </body>
 </html>
