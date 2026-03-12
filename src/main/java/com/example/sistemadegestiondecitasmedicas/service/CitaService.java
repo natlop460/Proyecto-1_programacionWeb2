@@ -1,6 +1,7 @@
 package com.example.sistemadegestiondecitasmedicas.service;
 
 import com.example.sistemadegestiondecitasmedicas.model.Cita;
+import com.example.sistemadegestiondecitasmedicas.model.Usuario;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,6 +19,17 @@ public class CitaService {
 
     public List<Cita> obtenerCitas(){
         return citas;
+    }
+
+
+    public List<Cita> obtenerCitas(Usuario usuario){
+        List<Cita> citasUsuario = new ArrayList<>();
+        for (Cita cita: citas){
+            if (cita.getPaciente().equals(usuario.getNombre())){
+                citasUsuario.add(cita);
+            }
+        }
+        return citasUsuario;
     }
 
 }

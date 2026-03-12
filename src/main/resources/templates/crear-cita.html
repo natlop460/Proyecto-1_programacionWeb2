@@ -13,6 +13,10 @@
     <h2>Crear Cita</h2>
     <form th:action="@{/citas/guardar}" th:object="${cita}" method="post">
       <div class="mb-3">
+        <label>Paciente</label>
+        <input type="text" th:field="*{paciente}" class="form-control">
+      </div>
+      <div class="mb-3">
         <label>Fecha</label>
         <input type="date" th:field="*{fecha}" class="form-control">
       </div>

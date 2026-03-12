@@ -2,7 +2,9 @@ package com.example.sistemadegestiondecitasmedicas.model;
 
 public class Cita {
 
+
     private Long id;
+    private String paciente;
     private String fecha;
     private String hora;
     private String doctor;
@@ -12,8 +14,9 @@ public class Cita {
     public Cita() {
     }
 
-    public Cita(Long id, String fecha, String hora, String doctor, String motivo, String estado) {
+    public Cita(Long id, String paciente,String fecha, String hora, String doctor, String motivo, String estado) {
         this.id = id;
+        this.paciente = paciente;
         this.fecha = fecha;
         this.hora = hora;
         this.doctor = doctor;
@@ -67,5 +70,13 @@ public class Cita {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public String getPaciente() {
+        return paciente;
+    }
+
+    public void setPaciente(String paciente) {
+        this.paciente = paciente;
     }
 }

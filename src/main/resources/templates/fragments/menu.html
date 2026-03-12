@@ -1,12 +1,13 @@
-<nav th:fragment="menu" class="navbar navbar-expand-lg navbar-light bg-light">
+<nav th:fragment="menu" class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
   <div class="container-fluid">
-    <a class="navbar-brand" th:href="@{/dashboard}">
+    <a class="navbar-brand fw-bold" th:href="@{/dashboard}">
       Sistema de citas clínicas
     </a>
     <div class="collapse navbar-collapse">
+      <!-- MENU IZQUIERDA -->
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
-          <a class="nav-link active" th:href="@{/dashboard}">
+          <a class="nav-link" th:href="@{/dashboard}">
             Dashboard
           </a>
         </li>
@@ -16,9 +17,16 @@
           </a>
         </li>
       </ul>
-      <a class="nav-link" th:href="@{/}">
-        Salir
-      </a>
+      <!-- USUARIO + LOGOUT -->
+      <div class="d-flex align-items-center">
+        <span class="navbar-text me-3" th:if="${usuario != null}">
+          👤 <strong th:text="${usuario.nombre}"></strong>
+          (<span th:text="${usuario.rol}"></span>)
+        </span>
+        <a class="btn btn-outline-danger btn-sm" th:href="@{/}">
+          Salir
+        </a>
+      </div>
     </div>
   </div>
 </nav>

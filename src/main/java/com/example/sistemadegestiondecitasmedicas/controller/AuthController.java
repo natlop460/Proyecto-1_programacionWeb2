@@ -2,6 +2,7 @@ package com.example.sistemadegestiondecitasmedicas.controller;
 
 import com.example.sistemadegestiondecitasmedicas.model.Usuario;
 import com.example.sistemadegestiondecitasmedicas.service.UsuarioService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,12 +33,15 @@ public class AuthController {
     @PostMapping("/dashboard")
     public String dashboard(
             @RequestParam String email,
-            @RequestParam String password
+            @RequestParam String password,
+            HttpSession session
     ){
 
         Usuario usuario = usuarioService.login(email,password);
 
         if(usuario != null){
+            //Se guarda el usuario con el rol
+            session.setAttribute("usuariologueado",usuario);
             return "redirect:/dashboard";
         }
 
