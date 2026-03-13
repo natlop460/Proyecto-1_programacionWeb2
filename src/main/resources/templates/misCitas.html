@@ -7,11 +7,11 @@
 </head>
 <body>
     <!-- NAVBAR -->
-    <div th:replace="fragments/menu :: menu"></div>
+    <div th:replace="~{fragments/menu :: menu}"></div>
     <!-- PAGE-->
     <div class="container mt-5">
         <h2>Mis Citas</h2>
-        <a th:href="@{/citas/crear}" class="btn btn-primary mb-3">
+        <a th:href="@{/misCitas/crear}" class="btn btn-primary mb-3">
             Nueva Cita
         </a>
         <table class="table table-striped">

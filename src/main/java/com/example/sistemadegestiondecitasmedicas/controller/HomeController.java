@@ -2,7 +2,7 @@ package com.example.sistemadegestiondecitasmedicas.controller;
 
 
 import com.example.sistemadegestiondecitasmedicas.model.Usuario;
-import com.example.sistemadegestiondecitasmedicas.service.CitaService;
+import com.example.sistemadegestiondecitasmedicas.service.misCitasService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +18,7 @@ public class HomeController {
     pudiendo utilizar los metodos de guardas y obtener citas en el controler
     */
     @Autowired
-    private CitaService citaService;
+    private misCitasService citaService;
 
     /*Metodo get para obtener la pagina inicial o raiz del proyecto (ventana de login o registro)
     Devuelve la vista index.html
@@ -38,9 +38,15 @@ public class HomeController {
         Usuario usuario = (Usuario) session.getAttribute("usuariologueado");
         //Usamos el model para enviar los datos del backend al html por medio del id citas y usuario
         model.addAttribute("usuario",usuario);
-        model.addAttribute("citas", citaService.obtenerCitas(usuario));
+        if (usuario.getRol().equals("USER"))
+            model.addAttribute("citas", citaService.obtenerCitas(usuario));
+        else
+            model.addAttribute("citas", citaService.obtenerCitas());
+
         return "dashboard";
     }
+
+
 
 
 }

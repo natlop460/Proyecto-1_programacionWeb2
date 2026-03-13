@@ -11,6 +11,15 @@ public class UsuarioService {
 
     private List<Usuario> usuarios = new ArrayList<>();
 
+    public UsuarioService() {
+
+        // Usuario creado en memoria
+
+        usuarios.add(new Usuario("admin","lnathalie803@gmail.com", "123", "Administrador"));
+        usuarios.add(new Usuario("Cindy","Dra@gmail.com", "123", "Doctor"));
+        usuarios.add(new Usuario("Mauricio","Dr@gmail.com", "123", "Doctor"));
+
+    }
     public void registrarUsuario(Usuario usuario){
         usuarios.add(usuario);
     }
@@ -28,5 +37,17 @@ public class UsuarioService {
 
     public List<Usuario> obtenerUsuarios(){
         return usuarios;
+    }
+
+    public List<Usuario> obtenerDoctores() {
+        List<Usuario> doctores = new ArrayList<>();
+
+        for (Usuario u : usuarios) {
+            if (u.getRol().equalsIgnoreCase("DOCTOR")) {
+                doctores.add(u);
+            }
+        }
+
+        return doctores;
     }
 }

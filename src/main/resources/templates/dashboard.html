@@ -8,7 +8,7 @@
 </head>
 <body>
     <!-- NAVBAR -->
-    <div th:replace="fragments/menu :: menu"></div>
+    <div th:replace="~{fragments/menu :: menu}"></div>
     <!-- PAGE -->
     <div class="container mt-4">
         <!-- TITLE -->
@@ -25,7 +25,7 @@
                     <p class="text-muted">
                         Agende una nueva cita con su doctor
                     </p>
-                    <a th:href="@{/citas/crear}" class="btn btn-primary">
+                    <a th:href="@{/misCitas/crear}" class="btn btn-primary">
                         Crear
                     </a>
                 </div>
@@ -37,7 +37,7 @@
                     <p class="text-muted">
                         Ver y manejar sus citas agendadas
                     </p>
-                    <a th:href="@{/citas}" class="btn btn-primary">
+                    <a th:href="@{/misCitas}" class="btn btn-primary">
                         Ver
                     </a>
                 </div>
@@ -49,7 +49,7 @@
                     <p class="text-muted">
                         Ver tu agenda completa de citas.
                     </p>
-                    <a th:href="@{/citas}" class="btn btn-primary">
+                    <a th:href="@{/agenda}" class="btn btn-primary">
                         Abrir
                     </a>
                 </div>
@@ -64,7 +64,8 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>fecha</th>
+                        <th>Paciente</th>
+                        <th>Fecha</th>
                         <th>Hora</th>
                         <th>Doctor</th>
                         <th>Razón</th>
@@ -73,6 +74,7 @@
                     </thead>
                     <tbody>
                     <tr th:each="cita : ${citas}">
+                        <td th:text="${cita.paciente}"></td>
                         <td th:text="${cita.fecha}"></td>
                         <td th:text="${cita.hora}"></td>
                         <td th:text="${cita.doctor}"></td>

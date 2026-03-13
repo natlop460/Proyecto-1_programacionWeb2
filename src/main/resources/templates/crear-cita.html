@@ -7,7 +7,7 @@
 </head>
 <body>
   <!-- NAVBAR -->
-  <div th:replace="fragments/menu :: menu"></div>
+  <div th:replace="~{fragments/menu :: menu}"></div>
   <!-- PAGE-->
   <div class="container mt-5">
     <h2>Crear Cita</h2>
@@ -22,11 +22,19 @@
       </div>
       <div class="mb-3">
         <label>Hora</label>
-        <input type="time" th:field="*{hora}" class="form-control">
+        <input type="time" th:field="*{hora}" class="form-control" step="3600">
       </div>
       <div class="mb-3">
-        <label>Doctor</label>
-        <input type="text" th:field="*{doctor}" class="form-control">
+        <div class="mb-3">
+          <label class="form-label">Doctor</label>
+          <select name="doctor" class="form-select" required>
+            <option value="">Seleccione un doctor</option>
+            <option th:each="doctor : ${doctores}"
+                    th:value="${doctor.nombre}"
+                    th:text="${doctor.nombre}">
+            </option>
+          </select>
+        </div>
       </div>
       <div class="mb-3">
         <label>Motivo</label>

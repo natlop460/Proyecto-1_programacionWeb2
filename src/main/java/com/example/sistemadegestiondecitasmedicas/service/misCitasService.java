@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class CitaService {
+public class misCitasService {
 
     private List<Cita> citas = new ArrayList<>();
 
@@ -31,5 +31,25 @@ public class CitaService {
         }
         return citasUsuario;
     }
+
+    public List<Cita> obtenerCitasDoctor(String Doctor){
+        List<Cita> citasDoctor = new ArrayList<>();
+        for (Cita cita: citas){
+            if (cita.getDoctor().equals(Doctor)){
+                citasDoctor.add(cita);
+            }
+        }
+        return citasDoctor;
+    }
+
+    public Cita obtenerCitaPorFechaYHora(String fecha, String hora) {
+        for (Cita cita : citas) {
+            if (cita.getFecha().equals(fecha) && cita.getHora().equals(hora)) {
+                return cita;
+            }
+        }
+        return null;
+    }
+
 
 }
