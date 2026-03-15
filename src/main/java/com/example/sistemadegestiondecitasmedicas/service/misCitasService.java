@@ -4,6 +4,7 @@ import com.example.sistemadegestiondecitasmedicas.model.Cita;
 import com.example.sistemadegestiondecitasmedicas.model.Usuario;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,9 +13,15 @@ public class misCitasService {
 
     private List<Cita> citas = new ArrayList<>();
 
-    public void guardarCita(Cita cita){
-        cita.setEstado("Confirmada");
+    public boolean guardarCita(Cita cita){
+        if(!fechaEsValida(cita.getFecha())){
+            return false;
+        }
+        if(citaExiste(cita.getDoctor(), cita.getFecha(), cita.getHora())){
+            return false;
+        }
         citas.add(cita);
+        return true;
     }
 
     public List<Cita> obtenerCitas(){
@@ -51,5 +58,30 @@ public class misCitasService {
         return null;
     }
 
+
+    public boolean fechaEsValida(String fecha){
+        LocalDate fechaCita = LocalDate.parse(fecha);
+        LocalDate hoy = LocalDate.now();
+        return !fechaCita.isBefore(hoy);
+    }
+
+    public boolean citaExiste(String doctor, String fecha, String hora){
+        for(Cita cita : citas){
+            if(cita.getDoctor().equals(doctor) &&
+                    cita.getFecha().equals(fecha) &&
+                    cita.getHora().equals(hora)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void eliminarCita(String fecha, String hora, String doctor){
+        citas.removeIf(cita ->
+                cita.getFecha().equals(fecha) &&
+                        cita.getHora().equals(hora) &&
+                        cita.getDoctor().equals(doctor)
+        );
+    }
 
 }

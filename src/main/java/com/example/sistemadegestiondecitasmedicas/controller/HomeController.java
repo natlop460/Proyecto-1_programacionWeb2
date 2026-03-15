@@ -42,7 +42,6 @@ public class HomeController {
             model.addAttribute("citas", citaService.obtenerCitas(usuario));
         else
             model.addAttribute("citas", citaService.obtenerCitas());
-
         return "dashboard";
     }
 
