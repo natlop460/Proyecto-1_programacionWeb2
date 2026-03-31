@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Mis Citas</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <div th:replace="~{fragments/menu :: menu}"></div>
+    <!-- PAGE-->
+    <div class="container mt-5">
+        <h2>Mis Citas</h2>
+        <a th:href="@{/misCitas/crear}" class="btn btn-primary mb-3">
+            Nueva Cita
+        </a>
+        <table class="table table-striped">
+            <thead class="table-dark">
+            <tr>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Doctor</th>
+                <th>Motivo</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="cita : ${citas}">
+                <td th:text="${cita.fecha}"></td>
+                <td th:text="${cita.hora}"></td>
+                <td th:text="${cita.doctor}"></td>
+                <td th:text="${cita.motivo}"></td>
+                <td>
+                <span class="badge bg-success"
+                      th:text="${cita.estado}">
+                </span>
+                </td>
+                <!-- BOTÓN ELIMINAR -->
+                <td>
+                    <form th:action="@{/citas/eliminar}" method="post">
+
+                        <input type="hidden" name="fecha" th:value="${cita.fecha}">
+                        <input type="hidden" name="hora" th:value="${cita.hora}">
+                        <input type="hidden" name="doctor" th:value="${cita.doctor}">
+
+                        <button class="btn btn-danger btn-sm"
+                                onclick="return confirm('¿Desea eliminar esta cita?')">
+                            Eliminar
+                        </button>
+
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script th:if="${mensaje}">
+        Swal.fire({
+            icon: 'success',
+            title: 'Aviso',
+            text: '[[${mensaje}]]',
+            confirmButtonText: 'OK'
+        });
+    </script>
+</body>
+</html>

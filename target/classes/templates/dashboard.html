@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <div th:replace="~{fragments/menu :: menu}"></div>
+    <!-- PAGE -->
+    <div class="container mt-4">
+        <!-- TITLE -->
+        <h2>Dashboard</h2>
+        <p class="text-muted">
+            Bienvenido! Maneje sus citas aquí.
+        </p>
+        <!-- CARDS -->
+        <div class="row mt-4">
+            <!-- Create Appointment -->
+            <div class="col-md-4">
+                <div class="card shadow-sm p-3">
+                    <h5>Crear cita</h5>
+                    <p class="text-muted">
+                        Agende una nueva cita con su doctor
+                    </p>
+                    <a th:href="@{/misCitas/crear}" class="btn btn-primary">
+                        Crear
+                    </a>
+                </div>
+            </div>
+            <!-- My Appointments -->
+            <div class="col-md-4">
+                <div class="card shadow-sm p-3">
+                    <h5>Mis citas</h5>
+                    <p class="text-muted">
+                        Ver y manejar sus citas agendadas
+                    </p>
+                    <a th:href="@{/misCitas}" class="btn btn-primary">
+                        Ver
+                    </a>
+                </div>
+            </div>
+            <!-- View Agenda -->
+            <div class="col-md-4">
+                <div class="card shadow-sm p-3">
+                    <h5>Ver Agenda</h5>
+                    <p class="text-muted">
+                        Ver tu agenda completa de citas.
+                    </p>
+                    <a th:href="@{/agenda}" class="btn btn-primary">
+                        Abrir
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- UPCOMING APPOINTMENTS -->
+        <div class="card mt-5">
+            <div class="card-header bg-primary text-white">
+                Próximas citas
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Paciente</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Doctor</th>
+                        <th>Razón</th>
+                        <th>Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="cita : ${citas}">
+                        <td th:text="${cita.paciente}"></td>
+                        <td th:text="${cita.fecha}"></td>
+                        <td th:text="${cita.hora}"></td>
+                        <td th:text="${cita.doctor}"></td>
+                        <td th:text="${cita.motivo}"></td>
+                        <td><span class="badge bg-success" th:text="${cita.estado}"></span></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script th:if="${mensaje}">
+        Swal.fire({
+            icon: 'success',
+            title: 'Éxito',
+            text: '[[${mensaje}]]',
+            confirmButtonText: 'OK'
+        });
+    </script>
+</body>
+</html>
