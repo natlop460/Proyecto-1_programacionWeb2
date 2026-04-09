@@ -41,15 +41,12 @@
                 <td>
                     <form th:action="@{/citas/eliminar}" method="post">
 
-                        <input type="hidden" name="fecha" th:value="${cita.fecha}">
-                        <input type="hidden" name="hora" th:value="${cita.hora}">
-                        <input type="hidden" name="doctor" th:value="${cita.doctor}">
+                        <input type="hidden" name="id" th:value="${cita.id}">
 
                         <button class="btn btn-danger btn-sm"
                                 onclick="return confirm('¿Desea eliminar esta cita?')">
                             Eliminar
                         </button>
-
                     </form>
                 </td>
             </tr>

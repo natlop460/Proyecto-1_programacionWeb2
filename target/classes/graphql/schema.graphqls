@@ -1,0 +1,20 @@
+type Cita {
+    id: ID
+    fecha: String
+    hora: String
+    descripcion: String
+}
+
+type Usuario {
+    id: ID
+    nombre: String
+    correo: String
+}
+
+type Query {
+    obtenerCitas: [Cita]
+}
+
+type Mutation {
+    crearCita(fecha: String, hora: String, descripcion: String): Cita
+}

@@ -22,7 +22,6 @@ public class UsuarioService {
             emailService.enviarCorreoRegistro(
                     "lnathalie803@gmail.com", nombre, email, password, rol
             );
-            return "PENDIENTE_APROBACION";
         }
 
         Usuario usuario = new Usuario(nombre, email, password, rol);
@@ -39,13 +38,14 @@ public class UsuarioService {
                 rol.equalsIgnoreCase("Doctor");
     }
 
-    // Login (podría mejorarse con query en repository, pero lo dejamos claro)
     public Usuario login(String email, String password){
-        for(Usuario u : usuarioRepository.findAll()){
-            if(u.getEmail().equals(email) && u.getPassword().equals(password)){
-                return u;
-            }
+
+        Usuario usuario = usuarioRepository.findByEmail(email);
+
+        if(usuario != null && usuario.getPassword().equals(password)){
+            return usuario;
         }
+
         return null;
     }
 
@@ -55,14 +55,6 @@ public class UsuarioService {
 
     // Lógica movida correctamente al service
     public List<Usuario> obtenerDoctores() {
-        List<Usuario> doctores = new ArrayList<>();
-
-        for (Usuario u : usuarioRepository.findAll()) {
-            if (u.getRol().equalsIgnoreCase("DOCTOR")) {
-                doctores.add(u);
-            }
-        }
-
-        return doctores;
+        return usuarioRepository.findByRolIgnoreCase("DOCTOR");
     }
 }

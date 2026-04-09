@@ -1,11 +1,17 @@
 package com.example.sistemadegestiondecitasmedicas.model;
+
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
+@Entity
+@Table(name = "citas")
 public class Cita {
 
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String paciente;
     private String fecha;
     private String hora;
@@ -16,8 +22,7 @@ public class Cita {
     public Cita() {
     }
 
-    public Cita(Long id, String paciente,String fecha, String hora, String doctor, String motivo, String estado) {
-        this.id = id;
+    public Cita(String paciente, String fecha, String hora, String doctor, String motivo, String estado) {
         this.paciente = paciente;
         this.fecha = fecha;
         this.hora = hora;

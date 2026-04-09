@@ -3,6 +3,7 @@ package com.example.sistemadegestiondecitasmedicas.service;
 import com.example.sistemadegestiondecitasmedicas.model.Cita;
 import com.example.sistemadegestiondecitasmedicas.model.Usuario;
 import com.example.sistemadegestiondecitasmedicas.repository.CitaRepository;
+import com.example.sistemadegestiondecitasmedicas.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import java.util.Map;
 public class misCitasService {
 
     private final CitaRepository citaRepository;
+    private final UsuarioRepository UsuarioRepository;
 
     // Método principal (usado por controller)
     public boolean guardarCita(Cita cita){
@@ -25,32 +27,27 @@ public class misCitasService {
             return false;
         }
 
-        if(citaExiste(cita.getDoctor(), cita.getFecha(), cita.getHora())){
+        if(citaRepository.existsByDoctorAndFechaAndHora(
+                cita.getDoctor(), cita.getFecha(), cita.getHora())){
             return false;
         }
-
+        cita.setEstado("PENDIENTE");
         citaRepository.save(cita);
         return true;
     }
 
-    // Método central para el dashboard
     public List<Cita> obtenerCitasPorUsuario(Usuario usuario){
 
         if (usuario.getRol().equalsIgnoreCase("USER")) {
-            return obtenerCitasDePaciente(usuario);
+            return citaRepository.findByPaciente(usuario.getNombre());
         }
 
         if (usuario.getRol().equalsIgnoreCase("DOCTOR")) {
-            return obtenerCitasDoctor(usuario.getNombre());
+            return citaRepository.findByDoctor(usuario.getNombre());
         }
 
-        // ADMIN u otros → ven todas
-        return obtenerTodasLasCitas();
+        return citaRepository.findAll();
     }
-
-    // =========================
-    // Métodos internos
-    // =========================
 
     public List<Cita> obtenerTodasLasCitas(){
         return citaRepository.findAll();
@@ -81,12 +78,7 @@ public class misCitasService {
     }
 
     public Cita obtenerCitaPorFechaYHora(String fecha, String hora) {
-        for (Cita cita : citaRepository.findAll()) {
-            if (cita.getFecha().equals(fecha) && cita.getHora().equals(hora)) {
-                return cita;
-            }
-        }
-        return null;
+        return citaRepository.findByFechaAndHora(fecha, hora);
     }
 
     private boolean fechaEsValida(String fecha){
@@ -106,8 +98,8 @@ public class misCitasService {
         return false;
     }
 
-    public void eliminarCita(String fecha, String hora, String doctor){
-        citaRepository.delete(fecha, hora, doctor);
+    public void eliminarCita(Long id){
+        citaRepository.deleteById(id);
     }
 
     public Map<String, Cita> obtenerAgenda(String fecha){
@@ -128,6 +120,11 @@ public class misCitasService {
         for(String hora : horas){
             agenda.put(hora, obtenerCitaPorFechaYHora(fecha, hora));
         }
+
         return agenda;
+    }
+
+    public Usuario obtenerUsuarioPorEmail(String email) {
+        return UsuarioRepository.findByEmail(email);
     }
 }

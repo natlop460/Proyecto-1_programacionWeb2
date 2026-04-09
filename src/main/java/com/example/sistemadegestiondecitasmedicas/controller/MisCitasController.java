@@ -4,13 +4,14 @@ import com.example.sistemadegestiondecitasmedicas.model.Cita;
 import com.example.sistemadegestiondecitasmedicas.model.Usuario;
 import com.example.sistemadegestiondecitasmedicas.service.misCitasService;
 import com.example.sistemadegestiondecitasmedicas.service.UsuarioService;
-import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.util.Map;
-import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
@@ -20,13 +21,10 @@ public class MisCitasController {
     private final UsuarioService usuarioService;
 
     @GetMapping("/misCitas")
-    public String verCitas(Model model, HttpSession session){
+    public String verCitas(Model model, Authentication authentication){
 
-        Usuario usuario = (Usuario) session.getAttribute("usuariologueado");
-
-        if (usuario == null) {
-            return "redirect:/";
-        }
+        String email = authentication.getName();
+        Usuario usuario = citaService.obtenerUsuarioPorEmail(email);
 
         model.addAttribute("usuario", usuario);
         model.addAttribute("citas", citaService.obtenerCitasPorUsuario(usuario));
@@ -35,13 +33,10 @@ public class MisCitasController {
     }
 
     @GetMapping("/misCitas/crear")
-    public String formularioCrearCita(Model model, HttpSession session){
+    public String formularioCrearCita(Model model, Authentication authentication){
 
-        Usuario usuario = (Usuario) session.getAttribute("usuariologueado");
-
-        if (usuario == null) {
-            return "redirect:/";
-        }
+        String email = authentication.getName();
+        Usuario usuario = citaService.obtenerUsuarioPorEmail(email);
 
         model.addAttribute("usuario", usuario);
         model.addAttribute("cita", new Cita());
@@ -83,12 +78,10 @@ public class MisCitasController {
 
     @PostMapping("/citas/eliminar")
     public String eliminarCita(
-            @RequestParam String fecha,
-            @RequestParam String hora,
-            @RequestParam String doctor,
+            @RequestParam Long id,
             RedirectAttributes redirectAttributes){
 
-        citaService.eliminarCita(fecha, hora, doctor);
+        citaService.eliminarCita(id);
 
         redirectAttributes.addFlashAttribute("mensaje",
                 "Cita eliminada correctamente");

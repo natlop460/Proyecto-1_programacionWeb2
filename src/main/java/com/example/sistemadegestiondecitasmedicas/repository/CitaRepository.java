@@ -1,29 +1,17 @@
 package com.example.sistemadegestiondecitasmedicas.repository;
 
 import com.example.sistemadegestiondecitasmedicas.model.Cita;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
-@Repository
-public class CitaRepository {
+public interface CitaRepository extends JpaRepository<Cita, Long> {
 
-    private List<Cita> citas = new ArrayList<>();
+    List<Cita> findByPaciente(String paciente);
 
-    public void save(Cita cita){
-        citas.add(cita);
-    }
+    List<Cita> findByDoctor(String doctor);
 
-    public List<Cita> findAll(){
-        return citas;
-    }
+    Cita findByFechaAndHora(String fecha, String hora);
 
-    public void delete(String fecha, String hora, String doctor){
-        citas.removeIf(cita ->
-                cita.getFecha().equals(fecha) &&
-                        cita.getHora().equals(hora) &&
-                        cita.getDoctor().equals(doctor)
-        );
-    }
+    boolean existsByDoctorAndFechaAndHora(String doctor, String fecha, String hora);
 }
